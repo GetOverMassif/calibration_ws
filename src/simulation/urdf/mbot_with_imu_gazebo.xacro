@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot name="simbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find simulation)/urdf/mbot_base_gazebo.xacro" />
+    <xacro:include filename="$(find simulation)/urdf/sensors/imu_gazebo.xacro" />
+
+
+    <xacro:property name="imu1_offset_x_n" value="0" />
+    <xacro:property name="imu1_offset_y_n" value="0" />
+    <xacro:property name="imu1_offset_z_n" value="0" />
+
+    <xacro:property name="imu1_offset_r_n" value="0" />
+    <xacro:property name="imu1_offset_p_n" value="0" />
+    <xacro:property name="imu1_offset_y_n" value="0" />
+
+
+    <xacro:property name="imu1_offset_x" value="0.35" />
+    <xacro:property name="imu1_offset_y" value="0" />
+    <xacro:property name="imu1_offset_z" value="${(base_height + imu_thickness) * 0.5}" />
+
+    <xacro:property name="imu1_offset_r" value="0" />
+    <xacro:property name="imu1_offset_p" value="0" />
+    <xacro:property name="imu1_offset_y" value="0" />
+
+    <!-- imu -->
+    <joint name="imu1_joint" type="fixed">
+        <origin xyz="${imu1_offset_x + imu1_offset_x_n}
+                     ${imu1_offset_y + imu1_offset_y_n}
+                     ${imu1_offset_z + imu1_offset_z_n}" 
+                rpy="${imu1_offset_r + imu1_offset_r_n}
+                     ${imu1_offset_p + imu1_offset_p_n}
+                     ${imu1_offset_y + imu1_offset_y_n}" />
+        <parent link="base_link"/>
+        <child link="imu1_link"/>
+    </joint>
+
+    <!-- <xacro:imu_wheeltec prefix="imu1"/> -->
+    <xacro:imu_wheeltec prefix="imu1"/>
+
+    <xacro:mbot_base_gazebo/>
+
+</robot>

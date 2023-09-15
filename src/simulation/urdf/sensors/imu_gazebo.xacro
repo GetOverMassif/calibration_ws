@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="imu">
+
+    <xacro:property name="imu_thickness" value="0.01" />
+    <xacro:property name="imu_radius" value="0.025" />
+
+    <xacro:macro name="imu_wheeltec" params="prefix:=imu">
+        <!-- Create imu reference frame -->
+        <link name="${prefix}_link">
+            <inertial>
+                <mass value="0.1" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                         iyy="0.01" iyz="0.0"
+                         izz="0.01" />
+            </inertial>
+
+            <visual>
+                <origin xyz=" 0 0 0 " rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="${imu_thickness}" radius="${imu_radius}"/>
+                    <!-- <bbox size="1.9 1.8 1.4"/> -->
+                </geometry>
+                <material name="black"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="${imu_thickness}" radius="${imu_radius}"/>
+                    <!-- <bbox size="1.9 1.8 1.4"/> -->
+                </geometry>
+            </collision>
+        </link>
+
+        <gazebo reference="${prefix}_link">
+            <material>Gazebo/Gray</material>
+        </gazebo>
+
+        <gazebo reference="${prefix}_link">
+            <sensor type="imu" name="${prefix}">
+                <always_on>true</always_on>
+                <update_rate>100</update_rate>
+                <!-- <visualize>true</visualize> -->
+                <!-- <topic>__default_topic__</topic> -->
+                <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                    <topicName>imu</topicName>
+                    <bodyName>imu</bodyName>
+                    <updateRateHZ>100.0</updateRateHZ>
+                    <gaussianNoise>0.0</gaussianNoise>
+                    <xyzOffset>0 0 0</xyzOffset>
+                    <rpyOffset>0 0 0</rpyOffset>
+                    <frameName>imu</frameName>
+                    <ros>
+                        <namespace>/</namespace>
+                        <remapping>~/out:=imu</remapping>
+                    </ros>
+                    <output_type>sensor_msgs/Imu</output_type>
+
+                </plugin>
+                <!-- <pose>0 0 0 0 0 0</pose> -->
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+</robot>
