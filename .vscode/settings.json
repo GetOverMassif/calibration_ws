@@ -69,6 +69,7 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "bit": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "geometry": "cpp"
     }
 }

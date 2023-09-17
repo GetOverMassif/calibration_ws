@@ -22,8 +22,8 @@ find_package(Ceres REQUIRED)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     /usr/include
-    # ${EIGEN3_INCLUDE_DIR}
-    # ${CERES_INCLUDE_DIRS}
+    ${EIGEN3_INCLUDE_DIR}
+    ${CERES_INCLUDE_DIRS}
 )
 
 

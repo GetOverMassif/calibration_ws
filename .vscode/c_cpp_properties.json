@@ -2,15 +2,25 @@
     "configurations": [
         {
             "name": "Linux",
+            "compilerPathInCppPropertiesJson": "/usr/bin/clang-13",
             "includePath": [
-                "${default}",
-                "/usr/local/include"
+                "/opt/ros/foxy/include",
+                "/usr/include/eigen3",
+                "${workspaceFolder}/src/imu_extrinstic_calibration/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang-13",
             "cStandard": "c17",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "linux-clang-x64"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64",
+            "mergeConfigurations": false,
+            "compilerPath": "/usr/bin/clang-13",
+            "browse": {
+                "path": [
+                    "/opt/ros/foxy/include",
+                    "/home/lj/Documents/aubo/calibration_ws"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
         }
     ],
     "version": 4
