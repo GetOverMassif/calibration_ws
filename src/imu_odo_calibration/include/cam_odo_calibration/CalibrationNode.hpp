@@ -12,10 +12,10 @@
 #include "agv_base_msgs/msg/encoder.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 
-#include "cam_odo_calibration/data_selection.hpp"
-#include "cam_odo_calibration/Solver.hpp"
-#include "cam_odo_calibration/Simulator.hpp"
-#include "cam_odo_calibration/PointCloudAlign.hpp"
+#include "imu_odo_calibration/data_selection.hpp"
+#include "imu_odo_calibration/Solver.hpp"
+#include "imu_odo_calibration/Simulator.hpp"
+#include "imu_odo_calibration/PointCloudAlign.hpp"
 
 // 时间戳同步问题
 // 时间戳的硬件同步可以消除时钟源漂移的影响
@@ -37,7 +37,7 @@ class CalibrationNode : public rclcpp::Node
 {
 public:
     CalibrationNode()
-    : Node("cam_odo_calibration"), ds_(1), solver_(sync_result_, camDatas_), T_(10), r_(0.3), b_(1.25), pca_(1),
+    : Node("imu_odo_calibration"), ds_(1), solver_(sync_result_, camDatas_), T_(10), r_(0.3), b_(1.25), pca_(1),
     simulator(T_)
     {
         this->declare_parameter("camTopic", "");
