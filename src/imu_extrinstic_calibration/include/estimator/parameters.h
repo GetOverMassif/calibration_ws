@@ -9,3 +9,5 @@ Eigen::Vector3d G{0.0, 0.0, 9.8};
 double TD = 0.0;
 extern int USE_IMU = true;
 extern bool MULTIPLE_THREAD = true;
+
+extern int ESTIMATE_EXTRINSIC = 2;

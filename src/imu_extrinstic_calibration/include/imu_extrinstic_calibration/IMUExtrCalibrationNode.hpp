@@ -35,14 +35,16 @@ public:
         );
 
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-            imuTopic, 200, std::bind(&IMUExtrCalibrationNode::imu_callback, this, _1)
+            odoTopic, 200, std::bind(&IMUExtrCalibrationNode::odom_callback, this, _1)
         );
 
     }
 
     void timer_callback();
 
-    void imu_callback(const sensor_msgs::msg::Imu&);
+    void imu_callback(const sensor_msgs::msg::Imu::SharedPtr imu_msg);
+
+    void odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom_msg);
 
 private:
     rclcpp::TimerBase::SharedPtr timer_;
@@ -50,8 +52,9 @@ private:
     std::string imuTopic;
     std::string odoTopic;
 
-    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
+    
 };
 
 void IMUExtrCalibrationNode::timer_callback()
@@ -59,27 +62,32 @@ void IMUExtrCalibrationNode::timer_callback()
 
 }
 
-void IMUExtrCalibrationNode::initFirstIMUPose(){
+// void IMUExtrCalibrationNode::initFirstIMUPose(){
 
-}
+// }
 
 
-void IMUExtrCalibrationNode::imu_callback(const sensor_msgs::msg::Imu& imu_msg)
+void IMUExtrCalibrationNode::imu_callback(const sensor_msgs::msg::Imu::SharedPtr imu_msg)
 {
     // static Eigen::Matrix3d last_pose = Eigen::Matrix3d::Identity();
     // static int start;
     // static double last_time;
 
-    double t = imu_msg.header.stamp.toSec();
-    double dx = imu_msg.linear_acceleration.x;
-    double dy = imu_msg.linear_acceleration.y;
-    double dz = imu_msg.linear_acceleration.z;
-    double rx = imu_msg.angular_velocity.x;
-    double ry = imu_msg.angular_velocity.y;
-    double rz = imu_msg.angular_velocity.z;
-    Eigen::Vector3d acc(dx, dy, dz);
-    Eigen::Vector3d gyr(rx, ry, rz);
-    estimator.inputIMU(t, acc, gyr);
+    // double t = imu_msg->header.stamp.toSec();
+    double dx = imu_msg->linear_acceleration.x;
+    double dy = imu_msg->linear_acceleration.y;
+    double dz = imu_msg->linear_acceleration.z;
+    double rx = imu_msg->angular_velocity.x;
+    double ry = imu_msg->angular_velocity.y;
+    double rz = imu_msg->angular_velocity.z;
+    // Eigen::Vector3d acc(dx, dy, dz);
+    // Eigen::Vector3d gyr(rx, ry, rz);
+    // estimator.inputIMU(t, acc, gyr);
     return;
+
+}
+
+void IMUExtrCalibrationNode::odom_callback(const nav_msgs::msg::Odometry::SharedPtr odom_msg)
+{
 
 }
